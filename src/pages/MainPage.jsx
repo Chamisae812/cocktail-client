@@ -1,5 +1,8 @@
 import {useState, useEffect} from "react";
-const App = () => {
+import { Link } from "react-router-dom";
+
+
+const MainPage = () => {
   /* JSX : JavaScript 안에서 HTML 처럼 작성하는 문법
      useState : 화면에 보여줄 값을 저장하는 공간
      => const [현재 상태의 변수, 변수값 상태를 바꾸는 함수] = useState(초기값)
@@ -30,10 +33,11 @@ const App = () => {
         // key : 리엑트가 각 항목을 구분할 댸 사용하는 고유값 (목록 출력시)
         <div key={recipe.id}>
           <h3>{recipe.name}</h3>
+          <p>{recipe.description}</p>
         </div>
       ))}
     </>
   );
 }
 
-export default App
+export default MainPage;
