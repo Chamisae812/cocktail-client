@@ -24,13 +24,9 @@ const MainPage = () => {
 
   return (
     <>
-      <h3>현재 숫자 : {count}</h3>
-      <button onClick = {() => setCount(count + 1)}>+1</button>
-      <button onClick = {() => setCount(count - 1)}>-1</button>
-      <button onClick = {() => setCount(0)}>reset</button>
       <h1>칵테일 레시피</h1>
       {recipes.map((recipe) => (
-        // key : 리엑트가 각 항목을 구분할 댸 사용하는 고유값 (목록 출력시)
+        // key : 리엑트가 각 항목을 구분할 때 사용하는 고유값 (목록 출력시)
         <div key={recipe.id}>
           <h3>{recipe.name}</h3>
           <p>{recipe.description}</p>
