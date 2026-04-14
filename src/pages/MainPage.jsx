@@ -15,7 +15,8 @@ const MainPage = () => {
   }
   const [recipes, setRecipes] = useState([]);
   const [keyword, setKeyword] = useState("");
-  //모달 상태 관리
+
+  // 모달 상태 관리
   const [isOpen, setIsOpen] = useState(false);
 
   const [search, setSearch] = useSearchParams();
@@ -27,9 +28,9 @@ const MainPage = () => {
   const fetchRecipes = async () => {
     const keyword = search.get("keyword");
     const data = await getRecipes(keyword);
-    setRecipes(data);
-    
-    if (keyword) {
+    setRecipes(data); // 받아온 데이터를 state에 저장
+
+    if (keyword !== null) {
       setKeyword(keyword);
     } else {
       setKeyword("");
@@ -38,12 +39,6 @@ const MainPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(
-      `http://localhost:4000/recipes?keyword=${keyword}`,
-    );
-    const data = await response.json();
-    setRecipes(data);
-
     // URL에 쿼리스트링으로 keyword를 저장
     // -> useEffect에서 search 값이 바뀔때마다 getRecipes 함수가 호출
     setSearch({ keyword });
@@ -58,9 +53,9 @@ const MainPage = () => {
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
         />
-        <button onClick={() => setIsOpen(true)}>검색</button>
+        <button>검색</button>
       </form>
-      <button>레시피 추가</button>
+      <button onClick={() => setIsOpen(true)}>레시피 추가</button>
       {recipes?.map((recipe) => (
         // key : 리액트가 각 항목을 구분할 때 사용하는 고유값 (목록 출력시)
         <div key={recipe.id}>
@@ -68,13 +63,13 @@ const MainPage = () => {
           <p>{recipe.description}</p>
         </div>
       ))}
-      {/* &&(그리고) : 둘 다 true 일 때만 true
-      -> 앞에가 true면 뒤도 true인지 판단
-      -> 앞에기 false면 뒤에가 true인지 판단 X
+      {/* && (그리고) : 둘 다 true일 때만 true
+          -> 앞에가 true면 뒤로 true인지 판단 
+          -> 앞에가 false면 뒤에가 true인지 판단 X
 
-      props : 상태나 함수 등을 자식 컴포넌트에 전달
-      */}
-      {isOpen && <RecipeAddModal onclose={() => setIsOpen(false)}/>}
+          props : 상태나 함수 등을 자식 컴포넌트에 전달
+          */}
+      {isOpen && <RecipeAddModal onClose={() => setIsOpen(false)} />}
     </>
   );
 };
