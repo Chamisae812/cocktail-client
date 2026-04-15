@@ -1,15 +1,9 @@
 import { Link, useSearchParams } from "react-router-dom";
 import "./Header.css";
+import { useAuth } from "../context/AuthContext"
 
 const Header = () => {
-  // localStorage에서 토큰을 꺼내서 로그인 여부 확인
-  const token = localStorage.getItem("token");
-  const name = localStorage.getItem("name");
-  console.log(token); //없으면 null
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-  }
+  const { token, name, logout } = useAuth();
   return (
     <>
       <header className="site-header">

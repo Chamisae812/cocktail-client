@@ -1,5 +1,6 @@
 import instance from "./instance";
 
+
 // 레시피 조회
 export const getRecipes = async (keyword) => {
   const response = await instance.get(

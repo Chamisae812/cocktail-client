@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getRecipes } from "../api/recipes.js";
 import RecipeAddModal from "../components/RecipeAddModal.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const MainPage = () => {
+  const { token } = useAuth();
   {
     /* 
       JSX : JavaScript 안에서 HTML 처럼 작성하는 문법
@@ -55,7 +57,9 @@ const MainPage = () => {
         />
         <button>검색</button>
       </form>
-      <button onClick={() => setIsOpen(true)}>레시피 추가</button>
+      {/* 로그인 되었을 때만 버튼을 보이게 */}
+      {token && <button onClick={() => setIsOpen(true)}>레시피 추가</button>}
+      
       {recipes?.map((recipe) => (
         // key : 리액트가 각 항목을 구분할 때 사용하는 고유값 (목록 출력시)
         <div key={recipe.id}>
