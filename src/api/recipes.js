@@ -11,9 +11,11 @@ export const getRecipes = async (keyword) => {
 
 // 레시피 추가
 export const addRecipe = async (name, image, description) => {
-  await instance.post("/recipes", {
-    name,
-    image,
-    description,
-  });
+  // 데이터 추가하는 것 중에 하나라도 파일 객체가 있다면 FormData 방식으로 넘겨야함
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("image", image);
+  formData.append("description", description);
+
+  await instance.post("/recipes", formData);
 };

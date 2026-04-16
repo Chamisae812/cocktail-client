@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { getRecipes } from "../api/recipes.js";
 import RecipeAddModal from "../components/RecipeAddModal.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -48,6 +48,7 @@ const MainPage = () => {
 
   return (
     <>
+    <div className="main-page">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -59,13 +60,14 @@ const MainPage = () => {
       </form>
       {/* 로그인 되었을 때만 버튼을 보이게 */}
       {token && <button onClick={() => setIsOpen(true)}>레시피 추가</button>}
-      
+    </div>
       {recipes?.map((recipe) => (
         // key : 리액트가 각 항목을 구분할 때 사용하는 고유값 (목록 출력시)
-        <div key={recipe.id}>
+        <Link key={recipe.id}>
+          <img src={`http://localhost:4000/uploads/${recipe.image}`} alt="" />
           <h3>{recipe.name}</h3>
           <p>{recipe.description}</p>
-        </div>
+        </Link>
       ))}
       {/* && (그리고) : 둘 다 true일 때만 true
           -> 앞에가 true면 뒤로 true인지 판단 
@@ -73,7 +75,7 @@ const MainPage = () => {
 
           props : 상태나 함수 등을 자식 컴포넌트에 전달
           */}
-      {isOpen && <RecipeAddModal onClose={() => setIsOpen(false)} />}
+      {isOpen && <RecipeAddModal onClose={() => setIsOpen(false)} onAddRecipes={fetchRecipes}/>}
     </>
   );
 };

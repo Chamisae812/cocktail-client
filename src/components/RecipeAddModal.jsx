@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { addRecipe } from "../api/recipes.js";
 import "./RecipeAddModal.css";
 
-const RecipeAddModal = ({ onClose }) => {
+const RecipeAddModal = ({ onClose, onAddRecipes }) => {
   // 입력창에 들어가는 값들은 state로 관리
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null); // 파일객체
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
@@ -15,6 +15,8 @@ const RecipeAddModal = ({ onClose }) => {
     // 레시피 추가 기능
     await addRecipe(name, image, description);
     navigate("/");
+    onClose();
+    onAddRecipes();
   };
   return (
     <div className="modal-background" onClick={onClose}>
@@ -35,9 +37,8 @@ const RecipeAddModal = ({ onClose }) => {
           />
           <input
             className="input"
-            type="text"
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
+            type="file"
+            onChange={(event) => setImage(event.target.files[0])}
             placeholder="레시피 이미지 URL 입력"
           />
           <input
