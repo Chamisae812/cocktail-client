@@ -16,4 +16,14 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
+// 응답 인터셉터 : 401 에러 발생 시 자동으로 로그아웃 처리
+instance.interceptors.response.use((response) => response, (error) => {
+  if (error.response.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    window.location.href = "/login";
+  }
+},
+);
+
 export default instance;

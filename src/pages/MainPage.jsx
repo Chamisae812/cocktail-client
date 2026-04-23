@@ -63,7 +63,7 @@ const MainPage = () => {
     </div>
       {recipes?.map((recipe) => (
         // key : 리액트가 각 항목을 구분할 때 사용하는 고유값 (목록 출력시)
-        <Link key={recipe.id}>
+        <Link key={recipe.id} to = {`/recipe/${recipe.id}`}>
           <img src={`http://localhost:4000/uploads/${recipe.image}`} alt="" />
           <h3>{recipe.name}</h3>
           <p>{recipe.description}</p>
