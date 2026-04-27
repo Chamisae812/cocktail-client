@@ -28,3 +28,9 @@ export const addRecipe = async (
 
   await instance.post("/recipes", formData);
 };
+
+// 레시피 하나 조회
+export const getRecipe = async () => {
+  const response = await instance.get(`/recipe/${id}`);
+  return response.data;
+}
